@@ -41,18 +41,26 @@ void URangeDetector::CheckDistanceToTarget(float DeltaTime)
 
 	APawn* PlayerPawn = GetWorld()->GetFirstPlayerController()->GetPawn();
 	
-	if (PlayerPawn != nullptr) 
+	if (PlayerPawn != nullptr)
 	{
 		targetLocation = PlayerPawn->GetActorLocation();
 		DistanceToTarget = FVector::Distance(thisLocation, targetLocation);			//Vector3.Distance(A, B)
 
-		if (DistanceToTarget <= 500.0f)
+		if (DistanceToTarget <= DetectionRange)
 		{
-			RotateToTarget(thisLocation, targetLocation, DeltaTime);
+			FHitResult Result;
+
+			FCollisionQueryParams TraceParams;
+			TraceParams.AddIgnoredActor(GetOwner()); // zeby nie wykrywa³ uderzenia w samego siebie
+			
+			bool bHit = GetWorld()->LineTraceSingleByChannel(Result, thisLocation, targetLocation, ECC_Pawn, TraceParams);
+
+			if (bHit && Result.GetActor() == PlayerPawn)
+			{
+				RotateToTarget(thisLocation, targetLocation, DeltaTime);
+			}
 		}
 	}
-	//dystans od kapsu³y do gracza --> odleg³oœæ = wspó³rzêdneGracza - wspó³¿êdneKapsu³y;
-	// if (distance <=)
 }
 
 
@@ -63,7 +71,6 @@ void URangeDetector::RotateToTarget(FVector thisLocation, FVector targetLocation
 
 	FRotator YLookRotation = FRotator(CurrentRotation.Pitch, TargetRotation.Yaw, CurrentRotation.Roll);
 
-	float RotationSpeed = 5.0f;
 	FRotator SmoothRotation = FMath::RInterpTo(CurrentRotation, YLookRotation, DeltaTime, RotationSpeed); //InterpolateTo - bezpieczniejsza wersja Lerpa do obracania obiektami
 	GetOwner()->SetActorRotation(SmoothRotation);
 }

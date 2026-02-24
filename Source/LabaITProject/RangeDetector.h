@@ -29,4 +29,10 @@ public:
 private:
 	void CheckDistanceToTarget(float DeltaTime);
 	void RotateToTarget(FVector thisLocation, FVector targetLocation, float DeltaTime);
+
+	UPROPERTY(EditAnywhere, Category = "Detector")
+	float DetectionRange = 500.0f;
+
+	UPROPERTY(EditAnywhere, Category = "Detector")
+	float RotationSpeed = 5.0f;
 };
