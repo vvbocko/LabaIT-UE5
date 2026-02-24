@@ -41,25 +41,27 @@ void URangeDetector::CheckDistanceToTarget(float DeltaTime)
 
 	APawn* PlayerPawn = GetWorld()->GetFirstPlayerController()->GetPawn();
 	
-	if (PlayerPawn != nullptr)
-	{
-		targetLocation = PlayerPawn->GetActorLocation();
-		DistanceToTarget = FVector::Distance(thisLocation, targetLocation);			//Vector3.Distance(A, B)
+	if (PlayerPawn == nullptr) return;
 
-		if (DistanceToTarget <= DetectionRange)
-		{
-			FHitResult Result;
+	targetLocation = PlayerPawn->GetActorLocation();
+	DistanceToTarget = FVector::Distance(thisLocation, targetLocation);			//Vector3.Distance(A, B)
 
-			FCollisionQueryParams TraceParams;
-			TraceParams.AddIgnoredActor(GetOwner()); // zeby nie wykrywa³ uderzenia w samego siebie
+	if (DistanceToTarget > DetectionRange) return;
+
+	FVector DirectionToPlayer = (targetLocation - thisLocation).GetSafeNormal(); // .normalize w unity - kierunek
+	FVector ForwardVector = GetOwner()->GetActorForwardVector();
+
+	if (FVector::DotProduct(ForwardVector, DirectionToPlayer) <= 0.0f) return; // po³owa calego zasiêgu za plecami jest ignorowana
+
+	FHitResult Result;
+	FCollisionQueryParams TraceParams;
+	TraceParams.AddIgnoredActor(GetOwner()); // zeby nie wykrywa³ uderzenia w samego siebie
 			
-			bool bHit = GetWorld()->LineTraceSingleByChannel(Result, thisLocation, targetLocation, ECC_Pawn, TraceParams);
+	bool bHit = GetWorld()->LineTraceSingleByChannel(Result, thisLocation, targetLocation, ECC_Pawn, TraceParams);
 
-			if (bHit && Result.GetActor() == PlayerPawn)
-			{
-				RotateToTarget(thisLocation, targetLocation, DeltaTime);
-			}
-		}
+	if (bHit && Result.GetActor() == PlayerPawn)
+	{
+		RotateToTarget(thisLocation, targetLocation, DeltaTime);
 	}
 }
 
