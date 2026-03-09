@@ -72,11 +72,25 @@ void UPlayerGrabberComponent::TickComponent(float DeltaTime, ELevelTick TickType
 	}
 }
 
+AActor* UPlayerGrabberComponent::GetGrabbedActor() const
+{
+	if (PhysicsHandle) 
+	{
+		if (UPrimitiveComponent* Component = PhysicsHandle->GetGrabbedComponent())
+		{
+			return Component->GetOwner();
+		}
+	}
+
+	return nullptr;
+}
+
+
 void UPlayerGrabberComponent::Use()
 {
 	if (PhysicsHandle)
 	{
-		if (PhysicsHandle->GetGrabbedComponent()) //
+		if (PhysicsHandle->GetGrabbedComponent())
 		{
 			Release();
 		}

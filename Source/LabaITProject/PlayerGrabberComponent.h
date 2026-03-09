@@ -31,6 +31,9 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
+	UFUNCTION(BlueprintCallable)
+	AActor* GetGrabbedActor() const;
+
 protected:
 	void Use();
 	void Grab();
