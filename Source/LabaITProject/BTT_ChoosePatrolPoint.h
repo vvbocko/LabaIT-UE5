@@ -20,4 +20,6 @@ public:
 protected:
 	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComponent, uint8* NodeMemory) override;
 
+	UPROPERTY(EditAnywhere, Category = "Blackboard")
+	FBlackboardKeySelector WaitTimeKey;
 };

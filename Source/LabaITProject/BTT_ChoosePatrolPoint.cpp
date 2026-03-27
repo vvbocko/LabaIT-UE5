@@ -31,20 +31,29 @@ EBTNodeResult::Type UBTT_ChoosePatrolPoint::ExecuteTask(UBehaviorTreeComponent& 
 		return EBTNodeResult::Failed;
 	}
 
+	UBlackboardComponent* BlackBoard = OwnerComponent.GetBlackboardComponent();
+	if (!BlackBoard)
+	{ 
+		return EBTNodeResult::Failed; 
+	}
 
 	int32 currentIndex = PatrolComponent->currentIndex;
 	int32 direction = PatrolComponent->direction;
+
 	AActor* CurrentPathPoint = PatrolComponent->PathPoints[currentIndex].PathPoint;
 	float CurrentWaitTime = PatrolComponent->PathPoints[currentIndex].WaitTime;
+
 	EPatrolType PatrolType = PatrolComponent->GetPatrolType();
 
-	if (!CurrentPathPoint)
+
+	if (!CurrentPathPoint && !CurrentWaitTime)
 	{
 		return EBTNodeResult::Failed;
 	}
 
 	FVector CurrentPointLocation = PatrolComponent->GetPathPointVector(CurrentPathPoint);
-	OwnerComponent.GetBlackboardComponent()->SetValueAsVector(GetSelectedBlackboardKey(), CurrentPointLocation);
+	BlackBoard->SetValueAsVector(GetSelectedBlackboardKey(), CurrentPointLocation);
+	BlackBoard->SetValueAsFloat(WaitTimeKey.SelectedKeyName, CurrentWaitTime);
 
 	if (PatrolType == EPatrolType::Cyclic)
 	{
