@@ -1,47 +1,46 @@
 # LabaITProject
 
-Series of small C++/Blueprints oriented tasks made in Unreal Engine 5 using First Person Template with Shooter Variant.
+A series of small C++ and Blueprint-oriented tasks made in Unreal Engine 5 using the First Person Template with a Shooter Variant.
 
-Added mechanics:
+---
 
-## Blueprints
-- Camera Zoom in/out
-- Target that counts hits
-- Player Input Movable platforms (up/down or sideways)
-- Exploding Barrels and Throwable bombs
-- Doors closing and opening on interaction using interfaces (modular: ex. some doors can be opened only by player, some only via button)
-- also using interfaces - buttons can be pressed to interact with doors for example
-- Portal teleporting player to the next Level with confirmation widget [tba: only player can collide, teleports to next teleport location instead of the lvl start position]
-- UI: Main Menu, Pause Menu and Options:
-   - Difficulty (Uses dificulty scaler: affects damage and the number of targets that need to be shooted in order to go to the next level)
-   - Window Mode (Fullscreen, Windowed, etc.)
-   - Resolution (1920x1080, 1280x720, etc.)
-   - Main/Pause Menus have: select level (only the ones that are unlocked)
--  Save/Load Game System with Slots that can be deleted (Saves: Player position, Current Level, Window Mode, Resolution, Difficulty)
+## Blueprint Features
+*   **Camera:** Zoom in/out functionality.
+*   **Targets:** Hit-counting target system.
+*   **Movable Platforms:** Player-input driven platforms (up/down or sideways).
+*   **Explosives:** Exploding barrels and throwable bombs.
+*   **Interactive Doors:** Modular interaction using interfaces (e.g., some doors can be opened only by the player, others only via a button).
+*   **Buttons:** Interface-driven buttons to interact with objects like doors.
+*   **Portals:** Teleports the player to the next level with a confirmation widget. *[WIP: Restricting collision to the player and teleporting to a specific location rather than the level start position]*
+*   **UI (Main Menu, Pause Menu & Options):** Features a difficulty scaler (affects damage and target requirements for level progression), window mode settings (Fullscreen, Windowed), and resolution settings (1920x1080, 1280x720). Also includes a level selector for unlocked levels.
+*   **Save/Load System:** Slot-based system with deletion capabilities. Saves the player's position, current level, window mode, resolution, and difficulty.
 
-## C++
-- Picking up and dropping objects
-- Enemy with 180° range of sight, rotating towards player if nothing's in the way [tba: use DistanceSquared]
-- Automatically opening and closing sliding door (player proximity - collider)
-- NPC Patrolling with Behavior Trees and C++ Tasks (variants: Random point from radius, PatrolPoints placed on level - "Cyclic" & "Back and Forth" Type of patrolling)
-- Set Patrol points are used as arrays of structures{Position, WaitTime} - every patrol point can have set wait time for NPC 
-##
+## C++ Features
+*   **Object Interaction:** Picking up and dropping objects.
+*   **Detector:** Features a 180° range of sight, rotating towards the player if the line of sight is clear. *[WIP: Implement DistanceSquared]*
+*   **Proximity Doors:** Sliding doors that automatically open and close based on player proximity using colliders.
+*   **NPC Patrolling:** Behavior Trees and C++ Tasks for patrolling. Includes random point selection from a radius and PatrolPoints placed on the level ("Cyclic" and "Back-and-Forth" types).
+*   **Patrol Point Data:** Uses arrays of structures containing Position and WaitTime, allowing each point to have a specific wait duration for the NPC.
 
-# Learned topics:
-- Math for games
-- Interfaces with C++/Blueprints
-- Enhanced Input System
-- Rendering, Checking visibility, Antialiasing, Ray Tracing
-- UE5 Gameplay Frameworks (Creating Game Instances)
-- PathFinding (Navigation Mesh, Dijkstra, A*, Heuristics)
-- State Machines, Behaviour Trees, State Trees
+---
 
+## Topics Learned
+*   Math for games
+*   Interfaces with C++ and Blueprints
+*   Enhanced Input System
+*   Rendering, Visibility Checking, Anti-aliasing, and Ray Tracing
+*   UE5 Gameplay Frameworks (Creating Game Instances)
+*   Pathfinding (Navigation Mesh, Dijkstra, A*, Heuristics)
+*   State Machines, Behavior Trees, and State Trees
 
-# Game Jam
-The project ends with an around 1-month-long game jam
+---
 
-Theme (random words generator): "mrówki, szczoteczka do zębów, bok, narkotyk, kciuk" (ants, toothbrush, side, drug, thumb)
-We need to pick 3 out of 5 words and make a game around those.
+## Game Jam
+As a part of the course conclusion we also make another project for a 1-month-long game jam.
 
-> Topics picked: 1.bok, 2.kciuk, 3.szczoteczka do zębów
-> << [Link to repo of our project "Cauldron of Complaints" \](https://github.com/vvbocko/CauldronOfComplaints)>>
+**Random Generatored Words:** "mrówki, szczoteczka do zębów, bok, narkotyk, kciuk" (ants, toothbrush, side, drug, thumb). We needed to pick 3 out of the 5 words to build a game around.
+
+> **Topics Picked:** 1. bok (side), 2. kciuk (thumb), 3. szczoteczka do zębów (toothbrush)
+
+**Check out the our project:**
+[Cauldron of Complaints Repository](https://github.com/vvbocko/CauldronOfComplaints)
