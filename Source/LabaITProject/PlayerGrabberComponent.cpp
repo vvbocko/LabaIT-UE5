@@ -112,7 +112,10 @@ void UPlayerGrabberComponent::Grab()
 	End = Start + CameraRotation.Vector() * GrabRange;
 
 	FHitResult Result; // "F" w FHitResultoznacza "stuktura"
-	GetWorld()->LineTraceSingleByChannel(Result, Start, End, ECollisionChannel::ECC_Visibility); // widzimy tylko te obiekty, które s¹ widoczne
+	FCollisionQueryParams Params;
+	Params.AddIgnoredSourceObject(GetOwner());
+
+	GetWorld()->LineTraceSingleByChannel(Result, Start, End, ECollisionChannel::ECC_PhysicsBody, Params); // widzimy tylko te obiekty, które s¹ widoczne
 
 	//DrawDebugLine(GetWorld(), Start, End, FColor::Cyan, false, 5.0f, 0, 5.0f);
 
@@ -122,7 +125,7 @@ void UPlayerGrabberComponent::Grab()
 
 		if (PhysicsHandle)	//Bez tego mamy error po próbie podniesienia --> Access violation reading location 0x0000000000000000. ---> dlatego trzeba sprawdzaæ czy nie jest null --> typowe ryzyko korzystania z pointerów
 		{
-			PhysicsHandle->GrabComponentAtLocationWithRotation(PC, NAME_None, Result.Location, CameraRotation);
+			PhysicsHandle->GrabComponentAtLocationWithRotation(PC, Result.BoneName, Result.Location, CameraRotation);
 		}
 	}
 }
